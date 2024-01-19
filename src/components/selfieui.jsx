@@ -33,6 +33,12 @@ const SelfieUI = ({ setSelfie }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative w-full h-full">
+        <button
+          className="absolute text-black top-0 right-0 m-4 p-2 bg-white rounded-full z-10"
+          onClick={() => setSelfie(false)}
+        >
+          X
+        </button>
         <Camera ref={cameraRef} isMaxResolution />
         {confirm && (
           <div className="absolute bottom-0 w-full p-4 bg-white">
