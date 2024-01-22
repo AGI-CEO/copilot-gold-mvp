@@ -12,13 +12,18 @@ const SelfieUI = ({ setSelfie }) => {
     setConfirm(true);
   };
 
-  const handleConfirm = async (setSelfie) => {
-    await fetch("/api/image", {
+  const handleConfirm = async () => {
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("timestamp", new Date().toISOString());
+
+    await fetch("/api/age", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        // Don't set Content-Type manually, the browser will do it for you
+        // "Content-Type": "multipart/form-data",
       },
-      body: JSON.stringify({ image, timestamp: new Date().toISOString() }),
+      body: formData,
     });
     setConfirm(false);
     setImage(null);
@@ -58,7 +63,11 @@ const SelfieUI = ({ setSelfie }) => {
         )}
         {!confirm && (
           <button
-            className="absolute bottom-0 right-0 m-4 btn btn-primary"
+            className="absolute bottom-0 m-5 btn btn-primary"
+            style={{
+              position: "absolute",
+              left: "50vw",
+            }}
             onClick={handleTakePhoto}
           >
             Take Photo
